@@ -25,8 +25,17 @@ class MethodChannelCustomSocialShare extends CustomSocialSharePlatform {
 
   @override
   Future<bool> to(ShareWith shareWith, String content) {
-    return methodChannel.invokeMethod<bool>(shareWith.name,
-        {"content": content}).then<bool>((bool? value) => value ?? false);
+    try {
+      final result = methodChannel.invokeMethod<bool>(shareWith.name, {
+        "content": content,
+      });
+      return result ?? false;
+    } catch(e) {
+      rethrow;
+    }
+    
+//     return methodChannel.invokeMethod<bool>(shareWith.name,
+//         {"content": content}).then<bool>((bool? value) => value ?? false);
   }
 
   @override
